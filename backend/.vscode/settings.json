@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./ACE-Step",
+        "./ACE-Step"
+    ]
+}
