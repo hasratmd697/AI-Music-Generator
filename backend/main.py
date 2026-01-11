@@ -4,6 +4,9 @@ import uuid
 import modal
 import os
 
+# from dotenv import load_dotenv
+# load_dotenv()
+
 from pydantic import BaseModel
 import requests
 
@@ -195,7 +198,8 @@ class MusicGenServer:
             categories=categories
         )
 
-    @modal.fastapi_endpoint(method="POST", requires_proxy_auth=True)
+    # @modal.fastapi_endpoint(method="POST", requires_proxy_auth=True)
+    @modal.fastapi_endpoint(method="POST", requires_proxy_auth=False)
     def generate_from_description(self, request: GenerateFromDescriptionRequest) -> GenerateMusicResponse:
         prompt = self.generate_prompt(request.full_described_song)
         lyrics = ""
@@ -208,7 +212,8 @@ class MusicGenServer:
             **request.model_dump(exclude={"full_described_song"})
         )
 
-    @modal.fastapi_endpoint(method="POST", requires_proxy_auth=True)
+    # @modal.fastapi_endpoint(method="POST", requires_proxy_auth=True)
+    @modal.fastapi_endpoint(method="POST", requires_proxy_auth=False)
     def generate_with_lyrics(self, request: GenerateWithCustomLyricsRequest) -> GenerateMusicResponse:
         return self.generate_music_with_cover(
             prompt=request.prompt, 
@@ -217,7 +222,8 @@ class MusicGenServer:
             **request.model_dump(exclude={"prompt", "lyrics"})
         )
 
-    @modal.fastapi_endpoint(method="POST", requires_proxy_auth=True)
+    # @modal.fastapi_endpoint(method="POST", requires_proxy_auth=True)
+    @modal.fastapi_endpoint(method="POST", requires_proxy_auth=False)
     def generate_with_described_lyrics(self, request: GenerateWithDescribedLyricsRequest) -> GenerateMusicResponse:
         lyrics = ""
         if not request.instrumental:
@@ -230,14 +236,33 @@ class MusicGenServer:
         )
 
 
+# =============================================================================
+# DEPLOYED ENDPOINT URLs (persistent app - no new containers created)
+# =============================================================================
+DEPLOYED_ENDPOINTS = {
+    # OLD URLs (incorrect - commented for comparison):
+    # "generate_with_lyrics": "https://hasratmd697--music-generator-musicgenserver-generate-wlt-ba449d.modal.run",
+    # "generate_with_described_lyrics": "https://hasratmd697--music-generator-musicgenserver-generate-wlt-a2ff74.modal.run",
+    
+    # NEW URLs (correct - from modal deploy output):
+    "generate_with_lyrics": "https://hasratmd697--music-generator-musicgenserver-generate-wit-ba449d.modal.run",
+    "generate_with_described_lyrics": "https://hasratmd697--music-generator-musicgenserver-generate-wit-a2ff74.modal.run",
+    "generate_from_description": "https://hasratmd697--music-generator-musicgenserver-generate-fro-6c1849.modal.run",
+}
+
+
 @app.local_entrypoint()
 def main():
-    server = MusicGenServer()
-    endpoint_url = server.generate_with_described_lyrics.get_web_url()
+    # OLD: Creates a new dev instance every time (commented for comparison)
+    # server = MusicGenServer()
+    # endpoint_url = server.generate_with_described_lyrics.get_web_url()
+    
+    # NEW: Use the deployed endpoint directly (no new containers)
+    endpoint_url = DEPLOYED_ENDPOINTS["generate_with_described_lyrics"]
 
     request_data = GenerateWithDescribedLyricsRequest(
         prompt="rave, funk, 140BPM, disco",
-        described_lyrics="lyrics about water bottles",
+        described_lyrics="lyrics about water monsoon",
         guidance_scale=15
     )
 
