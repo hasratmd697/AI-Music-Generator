@@ -2,11 +2,6 @@ import base64
 from typing import List
 import uuid
 import modal
-import os
-
-# from dotenv import load_dotenv
-# load_dotenv()
-
 from pydantic import BaseModel
 import requests
 
