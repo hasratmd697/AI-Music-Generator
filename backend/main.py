@@ -481,7 +481,7 @@ def main():
     request_data = GenerateWithDescribedLyricsRequest(
         prompt="rave, funk, 140BPM, disco",
         described_lyrics="lyrics about water monsoon",
-        guidance_scale=15
+        guidance_scale=10
     )
 
     # Convert request to JSON and send to API
