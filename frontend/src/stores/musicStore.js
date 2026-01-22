@@ -45,6 +45,10 @@ export const useMusicStore = defineStore('music', {
       this.error = null;
       this.generatedTrack = null;
 
+      // Show loading notification (persists until removed)
+      const { loading, removeNotification, success, error } = useNotifications();
+      const loadingNotificationId = loading("🎵 Generating your music... This takes about 60 seconds.");
+
       try {
         let endpoint = '';
         let payload = {};
@@ -83,14 +87,16 @@ export const useMusicStore = defineStore('music', {
         const response = await api.post(endpoint, payload);
         this.generatedTrack = response.data;
         
-        const { success } = useNotifications();
-        success("Music generated successfully!");
+        // Remove loading notification and show success
+        removeNotification(loadingNotificationId);
+        success("🎉 Your music is ready! Scroll down to listen.");
       } catch (err) {
         console.error("Generation failed:", err);
         const errorMsg = err.response?.data?.detail || err.message || "Failed to generate music";
         this.error = errorMsg;
         
-        const { error } = useNotifications();
+        // Remove loading notification and show error
+        removeNotification(loadingNotificationId);
         error(errorMsg);
       } finally {
         this.isLoading = false;

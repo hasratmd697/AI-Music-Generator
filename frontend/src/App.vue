@@ -31,18 +31,8 @@ const { mode } = storeToRefs(store);
       
       <div class="bg-white/60 dark:bg-gray-900/60 backdrop-blur-xl rounded-2xl border border-gray-200 dark:border-gray-800/60 p-1 shadow-2xl ring-1 ring-black/5 dark:ring-white/5 transition-colors duration-300">
         <div class="bg-white/40 dark:bg-gray-900/40 rounded-xl p-6 min-h-[400px] transition-colors duration-300">
-          <!-- Loading State Overlay -->
-           <div v-if="store.isLoading" class="absolute inset-0 z-20 bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm rounded-2xl flex flex-col items-center justify-center p-8 text-center animate-in fade-in duration-300">
-                <div class="relative w-24 h-24 mb-6">
-                    <div class="absolute inset-0 rounded-full border-4 border-gray-200 dark:border-gray-700"></div>
-                    <div class="absolute inset-0 rounded-full border-4 border-purple-500 border-t-transparent animate-spin"></div>
-                    <Music class="absolute inset-0 m-auto w-10 h-10 text-purple-600 dark:text-purple-400 animate-pulse" />
-                </div>
-                <h3 class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-600 to-pink-600 dark:from-purple-400 dark:to-pink-500 mb-2">Generating Music</h3>
-                <p class="text-gray-600 dark:text-gray-300 max-w-sm animate-pulse">
-                    Composing your track. This usually takes about 60 seconds...
-                </p>
-           </div>
+          <!-- Generation status is now shown via toast notifications (see NotificationContainer) -->
+          <!-- Users can continue browsing while music generates in the background -->
 
           <Transition
             mode="out-in"

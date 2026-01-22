@@ -104,14 +104,6 @@ AI-Music-Generator/
 
 _Coming soon_
 
-## 📝 API Endpoints
-
-| Endpoint                         | Description                     |
-| -------------------------------- | ------------------------------- |
-| `generate_from_description`      | Full song generation from text  |
-| `generate_with_lyrics`           | Music from user-provided lyrics |
-| `generate_with_described_lyrics` | Music from lyrics description   |
-
 ## 🤝 Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.

@@ -112,24 +112,6 @@ watch(() => props.audioUrl, () => {
                         @finish="onFinish"
                      />
                 </div>
-
-                <!-- Playback Speed Control -->
-                <div class="relative group">
-                    <button class="flex items-center gap-1 px-2 py-1 text-xs font-mono font-bold text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors bg-gray-100 dark:bg-gray-800 rounded">
-                        {{ playbackSpeed }}x
-                    </button>
-                    <div class="absolute bottom-full right-0 mb-2 w-24 bg-white dark:bg-gray-800 rounded-lg shadow-xl border border-gray-200 dark:border-gray-700 overflow-hidden hidden group-hover:block z-20">
-                        <button 
-                            v-for="rate in [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]" 
-                            :key="rate"
-                            @click="setSpeed(rate)"
-                            class="w-full px-3 py-2 text-left text-sm hover:bg-purple-50 dark:hover:bg-purple-900/20 text-gray-700 dark:text-gray-300 hover:text-purple-600 dark:hover:text-purple-300 transition-colors flex justify-between"
-                        >
-                            {{ rate }}x
-                            <span v-if="playbackSpeed === rate" class="text-purple-500">•</span>
-                        </button>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
